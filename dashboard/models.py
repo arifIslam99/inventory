@@ -26,10 +26,20 @@ class Category(models.Model):
     def __str__(self):
         return f'{self.name}'
 
+class Subcategory(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE,null=True)
+    name=models.CharField(max_length=50, null=True)
+
+    class Meta:
+        verbose_name_plural="Subcategory"
+
+    def __str__(self):
+        return f'{self.name}'
+
 class Product(models.Model):
+    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE,null=True)
     name = models.CharField(max_length=100, null=True)
     quantity = models.PositiveIntegerField(null=True)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE,null=True)
 
     class Meta:
         verbose_name_plural="Product"
